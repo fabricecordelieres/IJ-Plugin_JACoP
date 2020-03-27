@@ -1,9 +1,18 @@
+package _JACoP;
+
+import ij.*;
+import ij.gui.*;
+import ij.measure.*;
+import ij.process.*;
+
+import java.awt.*;
+
 /*
  * Counter3D.java
  *
  * Created on 7 novembre 2007, 11:54
  *
- * Copyright (C) 2007 Fabrice P. Cordelières
+ * Copyright (C) 2007 Fabrice P. Cordelieres
  *  
  * License:
  * This program is free software; you can redistribute it and/or modify
@@ -21,20 +30,9 @@
  
  */
 
-package _JACoP;
-
-import ij.*;
-import ij.gui.*;
-import ij.measure.*;
-import ij.process.*;
-
-import java.awt.*;
-import java.io.*;
-import java.util.*;
-
 /**
  *
- * @author Fabrice P. Cordeli°res, fabrice.cordelieres@gmail.com
+ * @author Fabrice P. Cordelieres, fabrice.cordelieres@gmail.com
  * @version 1.0, 7/11/07
  */
 public class Counter3D {
@@ -209,22 +207,9 @@ public class Counter3D {
         int currPos=0;
         int minID=0;
         int surfPix=0;
-        int neigbNb=0;
         int pos, currPixID;
         int neigbX, neigbY, neigbZ;
         
-        long start=System.currentTimeMillis();
-        /*
-         Finding the structures:
-         *The minID tag is initialized with the current value of tag (currID).If thresholded,
-         *the neighborhood of the current pixel is collected. For each of those 13 pixels,
-         *the value is retrieved and tested against minID: only the minimum of the two is kept.
-         *As anterior pixels have already been tagged, only two possibilities may exists:
-         *1-The minimum is currID: we start a new structure and currID should be incremented
-         *2-The minimum is not currID: we continue an already existing structure
-         *Each time a new pixel is tagged, a counter of pixels in the current tag is incremented.
-         */
-                
         this.objID=new int[this.length];
         
         for (int z=1; z<=this.nbSlices; z++){
@@ -265,7 +250,6 @@ public class Counter3D {
                     if (this.imgArray[currPos]!=0){
                         minID=this.objID[currPos];
                         surfPix=0;
-                        neigbNb=0;
                         //Find the minimum tag in the neighbours pixels
                         for (neigbZ=z-1; neigbZ<=z+1; neigbZ++){
                             for (neigbY=y-1; neigbY<=y+1; neigbY++){
@@ -277,7 +261,6 @@ public class Counter3D {
                                             if ((this.nbSlices>1 && ((neigbX==x && neigbY==y && neigbZ==z-1) ||(neigbX==x && neigbY==y && neigbZ==z+1))) ||(neigbX==x && neigbY==y-1 && neigbZ==z) ||(neigbX==x && neigbY==y+1 && neigbZ==z) ||(neigbX==x-1 && neigbY==y && neigbZ==z) ||(neigbX==x+1 && neigbY==y && neigbZ==z)) surfPix++;
                                             minID=Math.min(minID, this.objID[pos]);
                                         }
-                                        neigbNb++;
                                     }
                                 }
                             }
@@ -470,9 +453,9 @@ public class Counter3D {
     }
     
     /**
-     * Returns the centro°ds' list.
+     * Returns the centro�ds' list.
      *
-     * @return the coordinates of all found centro°ds as a dual double array ([ID][0:x, 1:y, 2:z]).
+     * @return the coordinates of all found centro�ds as a dual double array ([ID][0:x, 1:y, 2:z]).
      */
     public double[][] getCentroidList(){
         if (!this.getCentroid) this.populateCentroid();
@@ -480,11 +463,11 @@ public class Counter3D {
     }
     
     /**
-     * Returns the centro°ds' map.
+     * Returns the centro�ds' map.
      * @param drawNb should be true if numbers have to be drawn at each coordinate stored in cenArray (boolean).
      * @param whiteNb should be true if numbers have to appear white  (boolean).
      * @param dotSize size of the dots to be drawn (integer).
-     * @param fontSize font size of the numbers to be shown (integer).* @return an ImagePlus containing all centro°ds, each one carrying pixel value equal to its ID.
+     * @param fontSize font size of the numbers to be shown (integer).* @return an ImagePlus containing all centro�ds, each one carrying pixel value equal to its ID.
      */
     public ImagePlus getCentroidMap(boolean drawNb, boolean whiteNb, int dotSize, int fontSize){
         if (!this.getCentroid) this.populateCentroid();
@@ -493,9 +476,9 @@ public class Counter3D {
     }
     
     /**
-     * Returns the centro°ds' map.
+     * Returns the centro�ds' map.
      *
-     * @return an ImagePlus containing all centro°ds, each one carrying pixel value equal to its ID.
+     * @return an ImagePlus containing all centro�ds, each one carrying pixel value equal to its ID.
      */
     public ImagePlus getCentroidMap(){
         if (!this.getCentroid) this.populateCentroid();
@@ -631,7 +614,7 @@ public class Counter3D {
     /** Returns an ResultsTable containing statistics on objects:</P>
      * Volume and Surface: number of pixel forming the structures and at its surface respectively.</P>
      * StdDev, Median, IntDen, Min and Max: standard deviation, median, sum, minimum and maximum of all intensities for the current object.</P>
-     * X, Y and Z: coordinates of the current object's centro°d.</P>
+     * X, Y and Z: coordinates of the current object's centro�d.</P>
      * XM, YM and ZM: coordinates of the current object's centre of mass.</P>
      * BX, BY and BZ: coordinates of the top-left corner of the current object's bounding box.</P>
      * B-width, B-height and B-depth: current object's bounding box dimensions.</P>
@@ -641,9 +624,7 @@ public class Counter3D {
         double calXYZ=this.cal.pixelWidth*this.cal.pixelHeight*this.cal.pixelDepth;
         String unit=this.cal.getUnit();
         
-        String[] header={"Volume ("+unit+"^3)", "Surface ("+unit+"^2)", "Nb of obj. voxels", "Nb of surf. voxels", "IntDen", "Mean", "StdDev", "Median", "Min", "Max", "X", "Y", "Z", "Mean dist. to surf. ("+unit+")", "SD dist. to surf. ("+unit+")", "Median dist. to surf. ("+unit+")", "XM", "YM", "ZM", "BX", "BY", "BZ", "B-width", "B-height", "B-depth"};
         ResultsTable rt=new ResultsTable();
-        for (int i=0; i<header.length; i++) rt.setHeading(i, header[i]);
         for (int i=0; i<this.nbObj; i++){
             rt.incrementCounter();
             Object3D currObj=this.obj[i];
@@ -709,10 +690,9 @@ public class Counter3D {
         
         String[] header={"Object ID", "X", "Y", "Z"};
         ResultsTable rt=new ResultsTable();
-        for (int i=0; i<header.length; i++) rt.setHeading(i, header[i]);
         for (int i=0; i<this.surfCoord.length; i++){
             rt.incrementCounter();
-            for (int j=0; j<4; j++) rt.setValue(j, i, this.surfCoord[i][j]);
+            for (int j=0; j<header.length; j++) rt.setValue(header[j], i, this.surfCoord[i][j]);
         }
         
         rt.show("Surface pixel coordinates for "+this.title);

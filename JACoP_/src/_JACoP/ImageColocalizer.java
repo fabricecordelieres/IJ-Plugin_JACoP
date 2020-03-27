@@ -1,6 +1,15 @@
+package _JACoP;
+
+import ij.*;
+import ij.gui.*;
+import ij.measure.*;
+import ij.process.*;
+
+import java.awt.*;
+
 /*  JACoP: "Just Another Colocalization Plugin..." v1, 13/02/06
-    Fabrice P Cordelieres, fabrice.cordelieres at curie.u-psud.fr
-    Susanne Bolte, Susanne.bolte@isv.cnrs-gif.fr
+    Fabrice P Cordelieres, fabrice.cordelieres@gmail.com
+    Susanne Bolte, susanne.bolte@upmc.fr 
  
     Copyright (C) 2006 Susanne Bolte & Fabrice P. Cordelieres
   
@@ -21,16 +30,6 @@
  *
  *
 */
-
-package _JACoP;
-
-import ij.*;
-import ij.gui.*;
-import ij.ImagePlus.*;
-import ij.measure.*;
-import ij.process.*;
-
-import java.awt.*;
 
 /**
  *
@@ -71,7 +70,7 @@ public class ImageColocalizer {
         this.micronCal.pixelDepth/=1000;
         this.micronCal.pixelHeight/=1000;
         this.micronCal.pixelWidth/=1000;
-        this.micronCal.setUnit("°m");
+        this.micronCal.setUnit("µm");
         
         buildArray(ipA, ipB);
         
@@ -167,7 +166,6 @@ public class ImageColocalizer {
         double[] tmp=linreg(this.A, this.B, 0, 0);
         double a=tmp[0];
         double b=tmp[1];
-        double CoeffCorr=tmp[2];
         this.doThat=false;
         
         int LoopMin= (int) Math.max(this.Amin, (this.Bmin-b)/a);
@@ -218,7 +216,8 @@ public class ImageColocalizer {
             if (this.B[i]>CostesThrB) CostesSumBThr+=this.B[i];
         }
         
-        Plot plot=new Plot("Costes' threshold "+this.titleA+" and "+this.titleB,"ThrA", "Pearson's coefficient below",rx,ry);
+        Plot plot=new Plot("Costes' threshold "+this.titleA+" and "+this.titleB,"ThrA", "Pearson's coefficient below");
+        plot.add("line",rx,ry);
         plot.setLimits(LoopMin, LoopMax, rmin, rmax);
         plot.setColor(Color.black);
         plot.draw();
@@ -274,7 +273,6 @@ public class ImageColocalizer {
         double num;
         double den1;
         double den2;
-        double CCF0=0;
         double CCFmin=0;
         int lmin=-CCFx;
         double CCFmax=0;
@@ -340,7 +338,6 @@ public class ImageColocalizer {
             double CCF=num/(Math.sqrt(den1*den2));
             
             if (l==-CCFx){
-                CCF0=CCF;
                 CCFmin=CCF;
                 CCFmax=CCF;
             }else{
@@ -358,7 +355,8 @@ public class ImageColocalizer {
             count++;
         }
         IJ.log ("CCF min.: "+round(CCFmin,3)+" (obtained for dx="+lmin+") CCF max.: "+round(CCFmax,3)+" (obtained for dx="+lmax+")");
-        Plot plot=new Plot("Van Steensel's CCF between "+this.titleA+" and "+this.titleB,"dx", "CCF",x,CCFarray);
+        Plot plot=new Plot("Van Steensel's CCF between "+this.titleA+" and "+this.titleB,"dx", "CCF");
+        plot.add("line", x, CCFarray);
         plot.setLimits(-CCFx, CCFx, CCFmin-(CCFmax-CCFmin)*0.05, CCFmax+(CCFmax-CCFmin)*0.05);
         plot.setColor(Color.white);
         plot.draw();
@@ -378,7 +376,7 @@ public class ImageColocalizer {
         cf.doFit(CurveFitter.GAUSSIAN);
         param=cf.getParams();
         IJ.log("\nResults for fitting CCF on a Gaussian (CCF=a+(b-a)exp(-(xshift-c)^2/(2d^2))):"+cf.getResultString()+"\nFWHM="+Math.abs(round(2*Math.sqrt(2*Math.log(2))*param[3], 3))+" pixels");
-        for (int i=0; i<x.length; i++) CCFarray[i]=cf.f(CurveFitter.GAUSSIAN, param, x[i]);
+        for (int i=0; i<x.length; i++) CCFarray[i]=CurveFitter.f(CurveFitter.GAUSSIAN, param, x[i]);
         plot.setColor(Color.BLUE);
         plot.addPoints(x, CCFarray, 2);
         
@@ -395,7 +393,8 @@ public class ImageColocalizer {
         double[] Adb=int2double(this.A);    
         double[] Bdb=int2double(this.B);    
             
-        Plot plot = new Plot("Cytofluorogram between "+this.titleA+" and "+this.titleB, this.titleA, this.titleB, Adb, Bdb);
+        Plot plot = new Plot("Cytofluorogram between "+this.titleA+" and "+this.titleB, this.titleA, this.titleB);
+        plot.add("dot", Adb, Bdb);
         double limHigh=Math.max(this.Amax, this.Bmax);
         double limLow=Math.min(this.Amin, this.Bmin);
         plot.setLimits(this.Amin, this.Amax, this.Bmin, this.Bmax);
@@ -458,7 +457,7 @@ public class ImageColocalizer {
        
        ICQ=ICQ/this.length-0.5;
        
-       Plot plotA = new Plot("ICA A ("+this.titleA+")", "(Ai-a)(Bi-b)", this.titleA, new double[]{0, 0}, new double[]{0, 0});
+       Plot plotA = new Plot("ICA A ("+this.titleA+")", "(Ai-a)(Bi-b)", this.titleA);
        plotA.setColor(Color.white);
        plotA.setLimits(-lim, lim, 0, 1);
        plotA.draw();
@@ -478,7 +477,7 @@ public class ImageColocalizer {
         
        plotA.show();*/
        
-       Plot plotB = new Plot("ICA B ("+this.titleB+")", "(Ai-a)(Bi-b)", titleB, new double[]{0, 0}, new double[]{0, 0});
+       Plot plotB = new Plot("ICA B ("+this.titleB+")", "(Ai-a)(Bi-b)", titleB);
        plotB.setColor(Color.white);
        plotB.setLimits(-lim, lim, 0, 1);
        plotB.draw();
@@ -692,7 +691,8 @@ public class ImageColocalizer {
          arrayDistribR=arrayNew;
          
          
-         Plot plot = new Plot("Costes' method ("+this.titleA+" & "+this.titleB+")", "r", "Probability density of r", x, arrayDistribR);
+         Plot plot = new Plot("Costes' method ("+this.titleA+" & "+this.titleB+")", "r", "Probability density of r");
+         plot.add("line", x, arrayDistribR);
          plot.setLimits(minx-10*binWidth, maxx+10*binWidth, 0, maxy*1.05);
          plot.setColor(Color.white);
          plot.draw();
@@ -738,10 +738,10 @@ public class ImageColocalizer {
              Pval= z*t*(t*(t*(t*(t*b[4]+b[3])+b[2])+b[1])+b[0]);
          }
         
-         IJ.log("r (original)="+round(r2test,3)+"\nr (randomized)="+round(mean,3)+"°"+round(SD,3)+" (calculated from the fitted data)\nP-value="+round(Pval*100,2)+"% (calculated from the fitted data)");
+         IJ.log("r (original)="+round(r2test,3)+"\nr (randomized)="+round(mean,3)+"±"+round(SD,3)+" (calculated from the fitted data)\nP-value="+round(Pval*100,2)+"% (calculated from the fitted data)");
          
          IJ.log("\nResults for fitting the probability density function on a Gaussian (Probability=a+(b-a)exp(-(R-c)^2/(2d^2))):"+cf.getResultString()+"\nFWHM="+Math.abs(round(2*Math.sqrt(2*Math.log(2))*param[3], 3)));
-         for (i=0; i<x.length; i++) arrayDistribR[i]=cf.f(CurveFitter.GAUSSIAN, param, x[i]);
+         for (i=0; i<x.length; i++) arrayDistribR[i]=CurveFitter.f(CurveFitter.GAUSSIAN, param, x[i]);
          plot.setColor(Color.BLUE);
          plot.addPoints(x, arrayDistribR, 2);
          plot.show();
@@ -764,9 +764,7 @@ public class ImageColocalizer {
             cenB=this.countB.getCentroidList();
         }
         
-        String[] header={"Centre_A_n°", "Centre_B_n°", "d(A-B)", "reference_dist", "phi", "theta", "XA", "YA", "ZA", "XB", "YB", "ZB"};
         ResultsTable rt=new ResultsTable();
-        for (int i=0; i<header.length; i++) rt.setHeading(i, header[i]);
         int index=0;
         
         cenAbool=new boolean[cenA.length];
@@ -836,7 +834,7 @@ public class ImageColocalizer {
         
         if (rt.getCounter()==0){
             rt.incrementCounter();
-            rt.addLabel("Result", "No colocalization found");
+            rt.setValue("Result", rt.getCounter(), "No colocalization found");
         }
         
         for (int i=0; i<cenAbool.length; i++) if (cenAbool[i]) nbColocA++;
@@ -887,8 +885,6 @@ public class ImageColocalizer {
         
         String title=(cMass?" (Centres of mass)":" (Geometrical centres)")+" of "+this.titleA+"-Particles of "+this.titleB+" based colocalization";
         ResultsTable rt=new ResultsTable();
-        String[] header={"Centre_"+this.titleA+"_n°", "Particle_"+this.titleB+"_n°", "X", "Y", "Z"};
-        for (int i=0; i<header.length; i++) rt.setHeading(i, header[i]);
         
         Object3D[] objCentres=this.countA.getObjectsList();
         Object3D[] objParticles=this.countB.getObjectsList();
@@ -935,7 +931,7 @@ public class ImageColocalizer {
         
         if (rt.getCounter()==0){
             rt.incrementCounter();
-            rt.addLabel("Result", "No colocalization found");
+            rt.setValue("Result", rt.getCounter(), "No colocalization found");
         }
         
         for (int i=0; i<centBool.length; i++) if (centBool[i]) nbColocA++;
@@ -1014,35 +1010,6 @@ public class ImageColocalizer {
             this.Amean/=this.length;
             this.Bmean/=this.length;
         }
-    }
-    
-    /** Generates the ImagePlus base on the input array and title.
-     * @param array containing the pixels intensities (integer array).
-     * @param title to attribute to the ImagePlus (string).
-     */
-    private ImagePlus buildImg(int[] array, String title){
-        int index=0;
-        double min=array[0];
-        double max=array[0];
-        ImagePlus img=NewImage.createImage(title, this.width, this.height, this.nbSlices, this.depth, 1);
-        
-        for (int z=1; z<=this.nbSlices; z++){
-            IJ.showStatus("Creating the image...");
-            img.setSlice(z);
-            for (int y=0; y<this.height; y++){
-                for (int x=0; x<this.width; x++){
-                    int currVal=array[index];
-                    min=Math.min(min, currVal);
-                    max=Math.max(max, currVal);
-                    img.getProcessor().putPixel(x,y, currVal);
-                    index++;
-                }
-            }
-        }
-        IJ.showStatus("");
-        img.setCalibration(this.micronCal);
-        img.getProcessor().setMinAndMax(min, max);
-        return img;
     }
     
     public double[] linreg(int[] Aarray, int[] Barray, int TA, int TB){

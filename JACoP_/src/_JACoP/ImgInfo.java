@@ -1,3 +1,5 @@
+package _JACoP;
+
 /*
  * ImgInfo.java
  *
@@ -7,13 +9,9 @@
  * and open the template in the editor.
  */
 
-package _JACoP;
-import ij.*;
-import ij.measure.*;
-
 /**
  *
- * @author Fabrice Cordelières
+ * @author Fabrice Cordeliï¿½res
  */
 public class ImgInfo {
     public String title;

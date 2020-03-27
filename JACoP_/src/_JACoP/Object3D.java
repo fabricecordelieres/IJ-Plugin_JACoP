@@ -1,9 +1,15 @@
+package _JACoP;
+
+import ij.measure.*;
+
+import java.util.*;
+
 /*
  * _3DObject.java
  *
  * Created on 7 novembre 2007, 11:54
  *
- * Copyright (C) 2007 Fabrice P. Cordelières
+ * Copyright (C) 2007 Fabrice P. Cordelieres
  *  
  * License:
  * This program is free software; you can redistribute it and/or modify
@@ -21,16 +27,10 @@
  
  */
 
-package _JACoP;
-
-import ij.*;
-import ij.measure.*;
-
-import java.util.*;
 
 /**
  *
- * @author Fabrice P. Cordeli°res, fabrice.cordelieres@gmail.com
+ * @author Fabrice P. Cordelieres, fabrice.cordelieres@gmail.com
  * @version 1.0, 7/11/07
  */
 public class Object3D {
@@ -76,7 +76,7 @@ public class Object3D {
     /**True calibrated surface measurement*/
     public double surf_cal;
     
-     /**Coordinates of the centro°d (centroid[0:x, 1:y, 2:z]*/
+     /**Coordinates of the centro�d (centroid[0:x, 1:y, 2:z]*/
     public double[] centroid;
     
     /**Coordinates of the centre of mass (c_mass[0:x, 1:y, 2:z]*/
@@ -232,7 +232,7 @@ public class Object3D {
      * @return the median value of the input double array (double).
      */
     public double median(double[] array){
-        double median=0, count=0;
+        double median=0;
         int index=0;
                 
         Arrays.sort(array);
