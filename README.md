@@ -4,6 +4,7 @@
 
 ## Authors
 Fabrice P. Cordelières, Bordeaux Imaging Center (France). Fabrice.Cordelieres at gmail dot com
+
 Susanne Bolte, IFR 83, Paris (France). Susanne.Bolte at upmc.fr
 
 
