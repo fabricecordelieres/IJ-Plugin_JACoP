@@ -36,7 +36,7 @@ It includes a “Zoom/Reset button” which allows the user to set the two selec
 
 
 ## References/Citation
-When using the current plugin for publication, please refer to our review **[Bolte & F. P. Cordelières, A guided tour into subcellular colocalization analysis in light microscopy, Journal of Microscopy, Volume 224, Issue 3: 213-232.)](docs/Bolte_Cordelieres_JMicrosc_2006.pdf)**, to this webpage and of course to ImageJ. A copy of your paper being sent to both of our e-mail adresses would also be greatly appreciated !
+When using the current plugin for publication, please refer to our review **[Bolte & F. P. Cordelières, A guided tour into subcellular colocalization analysis in light microscopy, Journal of Microscopy, Volume 224, Issue 3: 213-232.](docs/Bolte_Cordelieres_JMicrosc_2006.pdf)**, to this webpage and of course to ImageJ. A copy of your paper being sent to both of our e-mail adresses would also be greatly appreciated !
 
 JACoP v2.0 was released for the second ImageJ User and Developer Conference in November 2008. The conference proceedings related the plugin is [available here](docs/Cordelieres_Bolte_IJ-Conf_2008.pdf).
 
