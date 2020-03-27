@@ -29,22 +29,23 @@ JACoP allows:
 ## Description
 JACoP has been totaly re-written, based on user feedback. The interface has been re-designed to oﬀer full access to all the options, based on a unique Swing frame.
 
-*[JACoP v2.0: The new interface](img/Jacop_interface.jpg)*
+*JACoP v2.0: The new interface*
+![JACoP v2.0: The new interface](img/Jacop_interface.jpg?raw=true)
 It includes a “Zoom/Reset button” which allows the user to set the two selected images side-by-side, automatically adapting the zoom. For each method selected, the user’s attention is drawn on options to set, by highlighting the appropriate tab by turning its caption to red.
 
 
 ## References/Citation
-When using the current plugin for publication, please refer to our review **[Bolte & F. P. Cordelières, A guided tour into subcellular colocalization analysis in light microscopy, Journal of Microscopy, Volume 224, Issue 3: 213-232.)](doc/Bolte_Cordelieres_JMicrosc_2006.pdf)**, to this webpage and of course to ImageJ. A copy of your paper being sent to both of our e-mail adresses would also be greatly appreciated !
+When using the current plugin for publication, please refer to our review **[Bolte & F. P. Cordelières, A guided tour into subcellular colocalization analysis in light microscopy, Journal of Microscopy, Volume 224, Issue 3: 213-232.)](docs/Bolte_Cordelieres_JMicrosc_2006.pdf)**, to this webpage and of course to ImageJ. A copy of your paper being sent to both of our e-mail adresses would also be greatly appreciated !
 
-JACoP v2.0 was released for the second ImageJ User and Developer Conference in November 2008. The conference proceedings related the plugin is [available here](doc/Cordelieres_Bolte_IJ-Conf_2008.pdf).
+JACoP v2.0 was released for the second ImageJ User and Developer Conference in November 2008. The conference proceedings related the plugin is [available here](docs/Cordelieres_Bolte_IJ-Conf_2008.pdf).
 
 
 ## Installation
-Simply download JACoP_.jar to the Plugins folder of ImageJ, restart ImageJ and use the "JACoP" command in the Plugins menu.
+Simply download [JACoP_.jar](https://github.com/fabricecordelieres/IJ-Plugin_JACoP/releases/latest) to the Plugins folder of ImageJ, restart ImageJ and use the "JACoP" command in the Plugins menu.
 
 
 ## Download
-Plugin available here: JACoP_.jar
+Plugin available here: [JACoP_.jar](https://github.com/fabricecordelieres/IJ-Plugin_JACoP/releases/latest)
 
 
 ## License
@@ -54,17 +55,20 @@ Copyright (C) 2006 Susanne Bolte & Fabrice P. Cordelières
 
 ## Changelog
 * __2.0 (07/11/2008):__
-* New interface: one window presenting all options
-* JACoP is now fully macro recordable
-* Added the objects based method
-* Added the "Zoom/Reset button” allowing to set the two selected images side-by-side, automatically adapting the zoom.
+  * New interface: one window presenting all options
+  * JACoP is now fully macro recordable
+  * Added the objects based method
+  * Added the "Zoom/Reset button” allowing to set the two selected images side-by-side, automatically adapting the zoom.
+
 * __2.1 (01/04/2010):__
-* Fixed a bug leading to an error in the Manders' coefficients calculation when applying a threshold to images.
+  * Fixed a bug leading to an error in the Manders' coefficients calculation when applying a threshold to images.
+
 * __2.1.1 (20/08/2010):__
-* Fixed a bug about distance based co-localization when calling the function from a macro.
+  * Fixed a bug about distance based co-localization when calling the function from a macro.
+
 * __2.1.2 (27/03/2020):__
-* Modified the GUI: imported from NetBeans to Eclipse (made it compatible with WindowsBuilder).
-* Modified the warning message to explicitly state the type of expected images.
-* Changed the citation as J. of Microscopy changed our review from freely available to view-for-fees...
-* Mavenized the project and changed the minimum required IJ version.
+  * Modified the GUI: imported from NetBeans to Eclipse (made it compatible with WindowsBuilder).
+  * Modified the warning message to explicitly state the type of expected images.
+  * Changed the citation as J. of Microscopy changed our review from freely available to view-for-fees...
+  * Mavenized the project and changed the minimum required IJ version.
 
