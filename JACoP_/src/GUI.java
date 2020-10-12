@@ -373,7 +373,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener, ItemL
 		sl_aboutPanel.putConstraint(SpringLayout.NORTH, aboutTxt, 5, SpringLayout.NORTH, aboutPanel);
 		sl_aboutPanel.putConstraint(SpringLayout.WEST, aboutTxt, 5, SpringLayout.WEST, aboutPanel);
 		sl_aboutPanel.putConstraint(SpringLayout.EAST, aboutTxt, -5, SpringLayout.EAST, aboutPanel);
-		aboutTxt.setText("Please refer to and cite:\n\nBolte S, Cordelieres FP.\nA guided tour into subcellular colocalization analysis \nin light microscopy. J Microsc. 2006;224:213-32.\n\nDownloadable from:\nhttp://www.blackwell-synergy.com/doi/pdf/10.1111/j.1365-2818.2006.01706.x");
+		aboutTxt.setText("Please refer to and cite:\n\nBolte S, Cordelieres FP.\nA guided tour into subcellular colocalization analysis \nin light microscopy. J Microsc. 2006;224:213-32.\n\nDownloadable from:\nhttps://doi.org/10.1111/j.1365-2818.2006.01706.x");
 		aboutTxt.setLineWrap(true);
 		aboutTxt.setEditable(false);
 		aboutTxt.setBackground(getBackground());
@@ -829,7 +829,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener, ItemL
         }else{
             macroInterpreter(Macro.getOptions());
             calib=impA.getCalibration();
-            if(calib.getUnit().equals("�m")){
+            if(calib.getUnit().equals("µm")){
                 calib.setUnit("nm");
                 calib.pixelWidth*=1000;
                 calib.pixelHeight*=1000;
@@ -1247,7 +1247,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener, ItemL
                 ImagePlus currImg=WindowManager.getImage(IDList[i]);
                 if (currImg.getBitDepth()!=24 && currImg.getBitDepth()!=32 && !currImg.isComposite()){
                     nbImg++;
-                    if (img==null) addImgToList(currImg);
+                    if (!img.isVisible()) addImgToList(currImg);
                 }
             }
         }
@@ -1266,7 +1266,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener, ItemL
         if (((ImgInfo) info.elementAt(1)).title.equals("[No image]")) info.removeElementAt(1);
         if (((ImgInfo) info.elementAt(0)).title.equals("[No image]")) info.removeElementAt(0);
          
-        if (nbImg>oldNbImg && img!=null) addImgToList(img);
+        if (nbImg>oldNbImg && img.isVisible()) addImgToList(img);
        
             
         if (nbImg<oldNbImg){
@@ -1310,13 +1310,15 @@ public class GUI extends JFrame implements ActionListener, ChangeListener, ItemL
     }
     
     public void addImgToList(ImagePlus img){
-        int min=65535, max=0;
-        for (int i=1; i<=img.getNSlices(); i++){
-            img.setSlice(i);
-            min=Math.min(min, (int) img.getStatistics().min);
-            max=Math.max(max, (int) img.getStatistics().max);
-        }
-        info.addElement(new ImgInfo(img.getTitle(), min, max, img.getProcessor().getAutoThreshold()));
+    	if(img.isVisible()) {
+	        int min=65535, max=0;
+	        for (int i=1; i<=img.getNSlices(); i++){
+	            img.setSlice(i);
+	            min=Math.min(min, (int) img.getStatistics().min);
+	            max=Math.max(max, (int) img.getStatistics().max);
+	        }
+	        info.addElement(new ImgInfo(img.getTitle(), min, max, img.getProcessor().getAutoThreshold()));
+    	}
     }
     
     
@@ -1504,7 +1506,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener, ItemL
     }
     
     public void imageClosed(ImagePlus imp){
-        updateImgList(imp);
+    	updateImgList(imp);
     }
     
     public void imageUpdated(ImagePlus imp){}
