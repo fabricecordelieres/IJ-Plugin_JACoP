@@ -26,7 +26,9 @@ _**Having access to more recently published methods:**_
 
 ## Description
 JACoP has been totaly re-written, based on user feedback. The interface has been re-designed to oﬀer full access to all the options, based on a unique Swing frame.
+
 ![JACoP v2.0: The new interface](https://github.com/fabricecordelieres/IJ-Plugin_JACoP/blob/master/Docs/jacop_interface.jpg)
+
 It includes a “Zoom/Reset button” which allows the user to set the two selected images side-by-side, automatically adapting the zoom. For each method selected, the user’s attention is drawn on options to set, by highlighting the appropriate tab by turning its caption to red.
 
 ## References/Citation
