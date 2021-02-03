@@ -1,5 +1,4 @@
-# IJ-Plugin_JACoP
-Just Another Colocalisation Plugin
+# JACoP: Just Another Colocalisation Plugin
 
 ## Authors
 Fabrice P. Cordelières, Bordeaux Imaging Center (France). Fabrice.Cordelieres at gmail dot com
