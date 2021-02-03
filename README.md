@@ -1,11 +1,11 @@
 # IJ-Plugin_JACoP
 Just Another Colocalisation Plugin
 
-##Authors
+## Authors
 Fabrice P. Cordelières, Bordeaux Imaging Center (France). Fabrice.Cordelieres at gmail dot com
 Susanne Bolte, IFR 83, Paris (France). Susanne.Bolte at upmc.fr
 
-#Features
+## Features
 JACoP allows:
 _**Calculating a set of commonly used co-localization indicators:**_
 * Pearson's coefficient
