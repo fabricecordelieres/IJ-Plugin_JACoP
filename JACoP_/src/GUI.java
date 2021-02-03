@@ -238,7 +238,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener, ItemL
 		
 		//------------- GUI -------------
 		setSize(410, 585);//400, 585);
-		setTitle("Just Another Colocalisation Plugin");
+		setTitle("Just Another Colocalisation Plugin v2.1.4 21/02/03");
 		setResizable(false);
 		setIconImage(new ImageIcon(getClass().getResource("coloc.png")).getImage()); 
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -1236,18 +1236,20 @@ public class GUI extends JFrame implements ActionListener, ChangeListener, ItemL
         CosteszTxt.setText(""+recomz);
     }
     
+    
     public void updateImgList(ImagePlus img){
         nbImg=0;
         
         int selectA=imgA.getSelectedIndex(), selectB=imgB.getSelectedIndex();
         
+        //If img is null, builds the initial image list, otherwise simply countes the number of images
         if (WindowManager.getImageCount()!=0){
             int[] IDList=WindowManager.getIDList();
             for (int i=0;i<IDList.length;i++){
                 ImagePlus currImg=WindowManager.getImage(IDList[i]);
                 if (currImg.getBitDepth()!=24 && currImg.getBitDepth()!=32 && !currImg.isComposite()){
                     nbImg++;
-                    if (!img.isVisible()) addImgToList(currImg);
+                    if(img==null) addImgToList(currImg);
                 }
             }
         }
@@ -1266,7 +1268,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener, ItemL
         if (((ImgInfo) info.elementAt(1)).title.equals("[No image]")) info.removeElementAt(1);
         if (((ImgInfo) info.elementAt(0)).title.equals("[No image]")) info.removeElementAt(0);
          
-        if (nbImg>oldNbImg && img.isVisible()) addImgToList(img);
+        if(img!=null) if (nbImg>oldNbImg && img.isVisible()) addImgToList(img);
        
             
         if (nbImg<oldNbImg){
@@ -1503,6 +1505,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener, ItemL
     
     public void imageOpened(ImagePlus imp){
         updateImgList(imp);
+        System.out.println("opened "+imp.getTitle());
     }
     
     public void imageClosed(ImagePlus imp){
