@@ -38,6 +38,7 @@ public class JACoP_ implements PlugIn{
         	frame.setVisible(true);;
         }else{
             frame.doZeJob(false);
+            frame.dispose();
         }
 		
 	}
