@@ -398,7 +398,7 @@ public class ImageColocalizer {
         double limHigh=Math.max(this.Amax, this.Bmax);
         double limLow=Math.min(this.Amin, this.Bmin);
         plot.setLimits(this.Amin, this.Amax, this.Bmin, this.Bmax);
-        plot.setColor(Color.white);
+        plot.setColor(Color.black);
         
         this.doThat=true;
         double[] tmp=linreg(this.A, this.B, 0, 0);
